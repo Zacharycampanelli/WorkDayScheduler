@@ -1,10 +1,9 @@
-
 $(document).ready(function () {
   // Displays current date at the top of the application
   var now = moment().format("dddd, MMMM Do");
   $("#currentDay").text(now);
 
-  // create save button
+  // Create save button
   $(".saveBtn").on("click", function () {
     console.log(this);
     var currentHour = $(this).parent().attr("id");
@@ -15,7 +14,7 @@ $(document).ready(function () {
     localStorage.setItem(currentHour, currentText);
   });
 
-  // load local storage data into each hour
+  // Load local storage data into each hour
 
   $("#hour5 .description").val(localStorage.getItem("hour5"));
   $("#hour6 .description").val(localStorage.getItem("hour6"));
@@ -30,7 +29,7 @@ $(document).ready(function () {
   $("#hour3 .description").val(localStorage.getItem("hour3"));
   $("#hour4 .description").val(localStorage.getItem("hour4"));
 
-  // check to see if each hour is before, after, or equal to the current hour and style accordingly
+  // Check to see if each hour is before, after, or equal to the current hour and style accordingly
 
   function testHour() {
     var currentHour = moment().hour();
@@ -39,13 +38,6 @@ $(document).ready(function () {
       if (thisHourBlock < 5) {
         thisHourBlock += 12;
       }
-      console.log(
-        currentHour,
-        thisHourBlock,
-        typeof currentHour,
-        typeof thisHourBlock
-      );
-      console.log(currentHour, thisHourBlock);
       if (currentHour > thisHourBlock) {
         $(this).removeClass("present");
         $(this).removeClass("future");
@@ -61,6 +53,10 @@ $(document).ready(function () {
       }
     });
   }
-  //update time interval
-  testHour();
+
+  // Updates the page every hour
+  setInterval(function () {
+    console.log("reset");
+    testHour();
+  }, 1000 * 60 * 60);
 });
